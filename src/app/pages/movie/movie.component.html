@@ -88,21 +88,12 @@
         [src]="movieSearch.img"
         [alt]="movieSearch.title"
       />
-      <div *ngIf="loadingImage" class="alert alert-loading">
-        <h4>Cargando imagen</h4>
-        <p>
-          <i class="fa fa-sync fa-spin fa-3x"></i>
-        </p>
-        <p>Espere por favor</p>
-      </div>
+      <app-loading
+        [title]="'Cargando imagen'"
+        [loading]="loadingImage"
+      ></app-loading>
     </div>
   </div>
 </div>
 
-<div *ngIf="loading" class="alert alert-loading animated fadeIn fast">
-  <h4>Cargando...</h4>
-  <p>
-    <i class="fa fa-sync fa-spin fa-3x"></i>
-  </p>
-  <p>Espere por favor</p>
-</div>
+<app-loading [title]="'Cargando...'" [loading]="loading"></app-loading>
