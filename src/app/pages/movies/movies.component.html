@@ -1,0 +1,68 @@
+<h1>Películas calificadas</h1>
+
+<div class="btn-container">
+  <button class="btn" routerLink="/movie/new">
+    <i class="fa fa-plus"></i> Agregar
+  </button>
+</div>
+
+<table *ngIf="!loading && movies.length > 0" class="animated fadeIn fast">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Título</th>
+      <th>Poster</th>
+      <th>Director</th>
+      <th>Calificación</th>
+      <th>Herramientas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let movie of movies; let i = index">
+      <th>{{ i + 1 }}</th>
+      <td>{{ movie.name }}</td>
+      <td>
+        <img
+          class="thumbnail"
+          *ngIf="movie.img"
+          [src]="movie.img"
+          [alt]="movie.name"
+        />
+        <img
+          class="thumbnail"
+          *ngIf="!movie.img"
+          src="assets/img/noimage.png"
+          alt="no-photo"
+        />
+      </td>
+      <td>{{ movie.director }}</td>
+      <td>{{ movie.rating }}</td>
+      <td>
+        <button class="btn btn-edit" [routerLink]="['/movie', movie.id]">
+          <i class="fa fa-pen"></i>
+        </button>
+        <button class="btn btn-back" (click)="deleteMovie(movie, i)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div
+  class="alert alert-norecords animated fadeIn fast"
+  *ngIf="!loading && movies.length === 0"
+>
+  <h4>No hay registros</h4>
+  <p>
+    <i class="fa fa-exclamation fa-3x"></i>
+  </p>
+</div>
+
+<div *ngIf="loading" class="alert alert-loading animated fadeIn fast">
+  <h4>Cargando...</h4>
+  <p>
+    <i class="fa fa-sync fa-spin fa-3x"></i>
+  </p>
+  <p>Espero por favor</p>
+</div>

@@ -1,0 +1,108 @@
+<h1 *ngIf="movie.id">
+  Actualizar Película <small>({{ movie.name }})</small>
+</h1>
+<h1 *ngIf="!movie.id">Agregar Película</h1>
+
+<div class="btn-container">
+  <button class="btn btn-back" routerLink="/heroes">
+    <i class="fa fa-arrow-left"></i> Regresar
+  </button>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="!loading">
+  <div class="form-container">
+    <form (ngSubmit)="save(f)" #f="ngForm">
+      <div class="input-container">
+        <label>Firebase ID</label>
+        <input
+          type="text"
+          disabled="disabled"
+          placeholder="Firebase ID"
+          name="id"
+          [(ngModel)]="movie.id"
+        />
+        <small class="footnote">Este campo es autogenerado</small>
+      </div>
+      <div class="input-container">
+        <label>Nombre</label>
+        <input
+          type="text"
+          placeholder="Nombre de la película"
+          required
+          name="name"
+          (keyup)="search(name.value)"
+          [(ngModel)]="movie.name"
+          #name="ngModel"
+        />
+        <small *ngIf="name.invalid && name.touched" class="footnote error"
+          >*Campo obligatorio</small
+        >
+      </div>
+      <div class="input-container">
+        <label>Director</label>
+        <input
+          type="text"
+          placeholder="Director de la película"
+          required
+          name="director"
+          [(ngModel)]="movie.director"
+          #director="ngModel"
+        />
+        <small
+          *ngIf="director.invalid && director.touched"
+          class="footnote error"
+          >*Campo obligatorio</small
+        >
+      </div>
+      <div class="input-container">
+        <label>Calificación (1 - 10)</label>
+        <select
+          name="rating"
+          required
+          [(ngModel)]="movie.rating"
+          #rating="ngModel"
+        >
+          <option [value]="0">Selecciona una opción</option>
+          <option *ngFor="let number of numbers" [value]="number">
+            {{ number }}
+          </option>
+        </select>
+        <small *ngIf="rating.invalid && rating.touched" class="footnote error"
+          >*Campo obligatorio</small
+        >
+      </div>
+      <div>
+        <button class="btn" type="submit">
+          <i class="fa fa-save"></i> Guardar
+        </button>
+      </div>
+    </form>
+    <div class="img animated fadeIn fast">
+      <img
+        *ngIf="movieSearch.img.length == 0 && !loadingImage"
+        src="assets/img/noimage.png"
+        alt="no-photo"
+      />
+      <img
+        *ngIf="movieSearch.img.length > 0 && !loadingImage"
+        [src]="movieSearch.img"
+        [alt]="movieSearch.title"
+      />
+      <div *ngIf="loadingImage" class="alert alert-loading">
+        <h4>Cargando imagen</h4>
+        <p>
+          <i class="fa fa-sync fa-spin fa-3x"></i>
+        </p>
+        <p>Espere por favor</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="alert alert-loading animated fadeIn fast">
+  <h4>Cargando...</h4>
+  <p>
+    <i class="fa fa-sync fa-spin fa-3x"></i>
+  </p>
+  <p>Espere por favor</p>
+</div>
