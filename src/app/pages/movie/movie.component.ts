@@ -43,7 +43,7 @@ export class MovieComponent implements OnInit {
     this.loading = true;
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== 'new' && id !== null) {
-      this.moviesService.getMovie(id).subscribe((res: any) => {
+      this.moviesService.getMovie(id).subscribe(res => {
         this.movie = res;
         this.movie.id = id;
         if (this.movie.img) this.movieSearch.img = this.movie.img
